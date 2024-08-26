@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "bananas": "node src/index.js",
     "chonny": "npm run bananas && npm start",
     "forest_run": "npm start",
@@ -12,5 +13,11 @@
   },
   "keywords": [],
   "author": "Chonny",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^10.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
