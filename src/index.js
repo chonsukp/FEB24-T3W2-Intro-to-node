@@ -32,20 +32,45 @@ function rollDice(diceSize = 20){
 
 const prompt = require('prompt-sync')({signit: true});
 
-try {let userDiceSize = prompt('What size dice do you want to roll? ');
+let diceRollHistory = [];
 
-    // check if user entered a number
-    if (Number.isNaN(userDiceSize)){
-        throw new Error("User did not enter a numeber");
-    }
-    
-    // check if number is valid (1 or greater, whole number)
-    let userInputAsNumber = parseInt(userDiceSize);
-    
-    
-    console.log(rollDice(userInputAsNumber));
-} catch (error) {
-    console.log("Error occured!");
-    console.log(error);
-}
+let userWantsToRepeatApp = true;
+
+do {
+    try {let userDiceSize = prompt('What size dice do you want to roll? ');
+
+        // check if user entered a number
+        if (isNaN(userDiceSize)){
+            throw new Error("User did not enter a numeber");
+        }
+        
+        // check if number is valid (1 or greater, whole number)
+        let userInputAsNumber = parseInt(userDiceSize);
+        if (userInputAsNumber < 1){
+            throw new Error("User entered an invalid number");
+        }
+        
+        diceRollHistory.push(rollDice(userInputAsNumber));
+        console.log(diceRollHistory[diceRollHistory.length - 1]);
+        
+        if (diceRollHistory.length > 10){
+            diceRollHistory.shift();
+        }
+
+    } catch (error) {
+        console.log("Error occured!");
+        console.log(error);
+    } finally {
+        let doesUserWantToRepeat = prompt("Roll another dice? Enter 'N' to stop, or anything else to play again: ");
+        if (doesUserWantToRepeat[0].toLocaleLowerCase() == "n") {
+            userWantsToRepeatApp = false;
+        }
+    }   
+} while (userWantsToRepeatApp);
+
+console.log("Full dice roll history:\n" + JSON.stringify(diceRollHistory));
+
+
+
+
 
